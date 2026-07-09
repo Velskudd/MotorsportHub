@@ -1,0 +1,20 @@
+@inherits LayoutComponentBase
+
+<div class="page">
+    <header class="topbar">
+        <a class="brand" href="/">🏁 <span>Motorsport<strong>Hub</strong></span></a>
+        <nav>
+            <NavLink href="/" Match="NavLinkMatch.All">Accueil</NavLink>
+            <NavLink href="/championnats">Championnats</NavLink>
+            <NavLink href="/a-propos">À propos</NavLink>
+        </nav>
+    </header>
+
+    <main>
+        @Body
+    </main>
+
+    <footer class="footer">
+        <p>MotorsportHub — l'annuaire des championnats de sport automobile en France.</p>
+    </footer>
+</div>

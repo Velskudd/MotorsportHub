@@ -1,0 +1,22 @@
+{
+  "name": "MotorsportHub (Blazor / .NET 10)",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
+  "forwardPorts": [5080],
+  "portsAttributes": {
+    "5080": {
+      "label": "MotorsportHub",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postCreateCommand": "dotnet restore MotorsportHub.sln",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "MotorsportHub.sln"
+      }
+    }
+  }
+}
