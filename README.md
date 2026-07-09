@@ -3,7 +3,11 @@
 Annuaire des championnats de sport automobile disputés en France : circuit, rallye,
 montagne, tout-terrain, karting, drift, camion et courses historiques.
 
-Le site est développé avec **Blazor** (.NET 10, rendu interactif côté serveur).
+Le site est développé avec **Blazor** (.NET 10, rendu interactif côté serveur), selon une
+**architecture en oignon** : le domaine au centre, sans dépendance ; les cas d'usage et les
+ports (interfaces) dans la couche Application ; les implémentations techniques dans
+Infrastructure ; et le front Blazor en périphérie. Un projet API pourra s'ajouter plus tard
+à côté du front, en consommant la même couche Application.
 
 ## 🚀 Lancer le projet dans un Codespace
 
@@ -14,7 +18,7 @@ Le site est développé avec **Blazor** (.NET 10, rendu interactif côté serveu
 3. Dans le terminal du Codespace, lancez :
 
    ```bash
-   dotnet watch --project src/MotorsportHub
+   dotnet watch --project src/MotorsportHub.Web
    ```
 
 4. Le port **5080** est automatiquement transféré : GitHub ouvre un aperçu du site
@@ -28,7 +32,7 @@ Le site est développé avec **Blazor** (.NET 10, rendu interactif côté serveu
 Prérequis : [SDK .NET 10](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 ```bash
-dotnet run --project src/MotorsportHub
+dotnet run --project src/MotorsportHub.Web
 ```
 
 Puis ouvrez <http://localhost:5080>.
@@ -38,26 +42,35 @@ Puis ouvrez <http://localhost:5080>.
 ```
 MotorsportHub.sln
 .devcontainer/
-  devcontainer.json          # Configuration Codespace (.NET 10, port 5080)
-src/MotorsportHub/
-  Program.cs                 # Point d'entrée ASP.NET Core / Blazor
-  Components/
-    App.razor                # Document HTML racine
-    Routes.razor             # Routeur Blazor
-    Layout/MainLayout.razor  # Mise en page (barre de navigation, pied de page)
-    Pages/
-      Home.razor             # Accueil : vue d'ensemble par discipline
-      Championships.razor    # Liste avec recherche et filtres par catégorie
-      ChampionshipDetail.razor # Fiche détaillée d'un championnat
-      About.razor            # À propos
-  Models/Championship.cs     # Modèle et catégories de championnats
-  Services/ChampionshipService.cs # Données des championnats + recherche
-  wwwroot/app.css            # Styles du site
+  devcontainer.json                 # Configuration Codespace (.NET 10, port 5080)
+src/
+  MotorsportHub.Domain/             # ── Cœur : entités, aucune dépendance
+    Entites/                        #    Championnat, Discipline, Organisateur, Statut
+  MotorsportHub.Application/        # ── Cas d'usage et ports
+    Interfaces/                     #    IChampionnatRepository, IDisciplineRepository
+    Services/ChampionnatsService.cs #    Consommé par le front (et l'API plus tard)
+  MotorsportHub.Infrastructure/     # ── Implémentations techniques
+    Donnees/DonneesInitiales.cs     #    Jeu de données (futur seed EF Core)
+    Depots/                         #    Repositories en mémoire (futur EF Core)
+  MotorsportHub.Web/                # ── Front Blazor (présentation)
+    Program.cs                      #    Composition root (câblage des couches)
+    Components/                     #    Pages et layout
+    wwwroot/app.css                 #    Styles du site
 ```
+
+La règle de dépendance pointe vers l'intérieur : `Web → Infrastructure → Application → Domain`.
+Le front ne connaît que les entités du Domain et les services de l'Application.
 
 ## 📝 Ajouter ou modifier un championnat
 
 Les données sont pour l'instant embarquées dans
-`src/MotorsportHub/Services/ChampionshipService.cs` : ajoutez simplement une
-entrée `new Championship(...)` à la liste. Une évolution possible est de
-déplacer ces données vers une base de données (SQLite + EF Core, par exemple).
+`src/MotorsportHub.Infrastructure/Donnees/DonneesInitiales.cs` : ajoutez une entrée
+via le helper `Ajouter(...)`. Lorsque la base de données arrivera (SQLite ou
+PostgreSQL + EF Core), cette classe deviendra le seed, et les repositories en
+mémoire seront remplacés par des repositories EF Core — sans toucher au front.
+
+## 🧭 Évolutions prévues
+
+- Entités `Circuit`, `Pilote`, `Voiture`, `Saison`, `Épreuve` dans le Domain
+- Projet `MotorsportHub.Api` (minimal API) consommant la couche Application
+- Base de données via EF Core dans Infrastructure

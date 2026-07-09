@@ -2,7 +2,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorsportHub", "src\MotorsportHub\MotorsportHub.csproj", "{8F9A2C41-6B3D-4E7A-9C15-2D8E4F6A1B03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorsportHub.Domain", "src\MotorsportHub.Domain\MotorsportHub.Domain.csproj", "{1A7B3C52-9D4E-4F6A-8B21-3E9F5A7C2D14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorsportHub.Application", "src\MotorsportHub.Application\MotorsportHub.Application.csproj", "{2B8C4D63-AE5F-4A7B-9C32-4FA06B8D3E25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorsportHub.Infrastructure", "src\MotorsportHub.Infrastructure\MotorsportHub.Infrastructure.csproj", "{3C9D5E74-BF6A-4B8C-AD43-5AB17C9E4F36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorsportHub.Web", "src\MotorsportHub.Web\MotorsportHub.Web.csproj", "{8F9A2C41-6B3D-4E7A-9C15-2D8E4F6A1B03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,6 +16,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A7B3C52-9D4E-4F6A-8B21-3E9F5A7C2D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7B3C52-9D4E-4F6A-8B21-3E9F5A7C2D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7B3C52-9D4E-4F6A-8B21-3E9F5A7C2D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7B3C52-9D4E-4F6A-8B21-3E9F5A7C2D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B8C4D63-AE5F-4A7B-9C32-4FA06B8D3E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B8C4D63-AE5F-4A7B-9C32-4FA06B8D3E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B8C4D63-AE5F-4A7B-9C32-4FA06B8D3E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B8C4D63-AE5F-4A7B-9C32-4FA06B8D3E25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C9D5E74-BF6A-4B8C-AD43-5AB17C9E4F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9D5E74-BF6A-4B8C-AD43-5AB17C9E4F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9D5E74-BF6A-4B8C-AD43-5AB17C9E4F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9D5E74-BF6A-4B8C-AD43-5AB17C9E4F36}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F9A2C41-6B3D-4E7A-9C15-2D8E4F6A1B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8F9A2C41-6B3D-4E7A-9C15-2D8E4F6A1B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F9A2C41-6B3D-4E7A-9C15-2D8E4F6A1B03}.Release|Any CPU.ActiveCfg = Release|Any CPU

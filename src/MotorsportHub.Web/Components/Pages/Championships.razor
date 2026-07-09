@@ -1,0 +1,80 @@
+@page "/championnats"
+@inject ChampionnatsService Service
+
+<PageTitle>Championnats — MotorsportHub</PageTitle>
+
+<h1>Les championnats</h1>
+
+<div class="filters">
+    <input class="search"
+           type="search"
+           placeholder="Rechercher un championnat, un organisateur..."
+           value="@_texte"
+           @oninput="SurSaisie" />
+
+    <div class="chips">
+        <button class="chip @(_disciplineSlug is null ? "active" : "")"
+                @onclick="() => ChoisirDiscipline(null)">
+            Tous
+        </button>
+        @foreach (var d in _disciplines)
+        {
+            var discipline = d;
+            <button class="chip @(_disciplineSlug == discipline.Slug ? "active" : "")"
+                    @onclick="() => ChoisirDiscipline(discipline.Slug)">
+                @discipline.Emoji @discipline.Nom
+            </button>
+        }
+    </div>
+</div>
+
+<p class="result-count">
+    @_resultats.Count championnat@(_resultats.Count > 1 ? "s" : "") trouvé@(_resultats.Count > 1 ? "s" : "")
+</p>
+
+<div class="card-grid">
+    @foreach (var championnat in _resultats)
+    {
+        <a class="card" href="/championnats/@championnat.Slug">
+            <span class="badge">@championnat.Discipline.Emoji @championnat.Discipline.Nom</span>
+            <h2>@championnat.Nom</h2>
+            <p>@championnat.Description</p>
+            <span class="card-meta">@string.Join(", ", championnat.Organisateurs.Select(o => o.Nom))</span>
+        </a>
+    }
+</div>
+
+@if (_resultats.Count == 0)
+{
+    <p class="empty">Aucun championnat ne correspond à votre recherche.</p>
+}
+
+@code {
+    private IReadOnlyList<Discipline> _disciplines = [];
+    private IReadOnlyList<Championnat> _resultats = [];
+    private string _texte = string.Empty;
+    private string? _disciplineSlug;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _disciplines = await Service.ObtenirDisciplinesAsync();
+        await RafraichirAsync();
+    }
+
+    private async Task SurSaisie(ChangeEventArgs e)
+    {
+        _texte = e.Value?.ToString() ?? string.Empty;
+        await RafraichirAsync();
+    }
+
+    private async Task ChoisirDiscipline(string? slug)
+    {
+        _disciplineSlug = slug;
+        await RafraichirAsync();
+    }
+
+    private async Task RafraichirAsync()
+    {
+        _resultats = await Service.RechercherAsync(_texte, _disciplineSlug);
+    }
+}

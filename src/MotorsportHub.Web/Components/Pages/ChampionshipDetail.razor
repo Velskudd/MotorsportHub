@@ -1,5 +1,5 @@
 @page "/championnats/{Slug}"
-@inject ChampionshipService Service
+@inject ChampionnatsService Service
 
 @if (_championnat is null)
 {
@@ -15,17 +15,23 @@ else
     <a class="back-link" href="/championnats">← Tous les championnats</a>
 
     <article class="detail">
-        <span class="badge">@_championnat.Categorie.Emoji() @_championnat.Categorie.Libelle()</span>
+        <span class="badge">@_championnat.Discipline.Emoji @_championnat.Discipline.Nom</span>
         <h1>@_championnat.Nom</h1>
 
         <dl class="detail-facts">
-            <dt>Organisateur</dt>
-            <dd>@_championnat.Organisateur</dd>
+            <dt>Organisateur@(_championnat.Organisateurs.Count > 1 ? "s" : "")</dt>
+            <dd>@string.Join(", ", _championnat.Organisateurs.Select(o => o.Nom))</dd>
 
             @if (_championnat.AnneeCreation is int annee)
             {
                 <dt>Création</dt>
                 <dd>@annee</dd>
+            }
+
+            @if (_championnat.Statut == StatutChampionnat.Disparu)
+            {
+                <dt>Statut</dt>
+                <dd>Disparu</dd>
             }
 
             @if (!string.IsNullOrEmpty(_championnat.SiteWeb))
@@ -43,10 +49,10 @@ else
     [Parameter]
     public string Slug { get; set; } = string.Empty;
 
-    private Championship? _championnat;
+    private Championnat? _championnat;
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
-        _championnat = Service.ParSlug(Slug);
+        _championnat = await Service.ObtenirParSlugAsync(Slug);
     }
 }
