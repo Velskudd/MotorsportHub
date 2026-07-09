@@ -1,0 +1,32 @@
+@page "/"
+@inject ChampionshipService Service
+
+<PageTitle>MotorsportHub — Les championnats de sport auto en France</PageTitle>
+
+<section class="hero">
+    <h1>Tous les championnats de sport automobile en France</h1>
+    <p>
+        Du GT au rallye, de la course de côte au karting : MotorsportHub répertorie
+        <strong>@Service.Tous.Count championnats et séries</strong> disputés dans l'Hexagone.
+    </p>
+    <a class="cta" href="/championnats">Explorer les championnats</a>
+</section>
+
+<section class="category-overview">
+    <h2>Par discipline</h2>
+    <div class="category-grid">
+        @foreach (var (categorie, nombre) in Comptes)
+        {
+            <a class="category-tile" href="/championnats">
+                <span class="category-emoji">@categorie.Emoji()</span>
+                <span class="category-name">@categorie.Libelle()</span>
+                <span class="category-count">@nombre championnat@(nombre > 1 ? "s" : "")</span>
+            </a>
+        }
+    </div>
+</section>
+
+@code {
+    private IEnumerable<KeyValuePair<ChampionshipCategory, int>> Comptes =>
+        Service.CompteParCategorie().OrderBy(kv => kv.Key);
+}

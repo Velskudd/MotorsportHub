@@ -1,0 +1,52 @@
+@page "/championnats/{Slug}"
+@inject ChampionshipService Service
+
+@if (_championnat is null)
+{
+    <PageTitle>Championnat introuvable — MotorsportHub</PageTitle>
+    <h1>Championnat introuvable</h1>
+    <p>Aucun championnat ne correspond à cette adresse.</p>
+    <a class="back-link" href="/championnats">← Retour à la liste</a>
+}
+else
+{
+    <PageTitle>@_championnat.Nom — MotorsportHub</PageTitle>
+
+    <a class="back-link" href="/championnats">← Tous les championnats</a>
+
+    <article class="detail">
+        <span class="badge">@_championnat.Categorie.Emoji() @_championnat.Categorie.Libelle()</span>
+        <h1>@_championnat.Nom</h1>
+
+        <dl class="detail-facts">
+            <dt>Organisateur</dt>
+            <dd>@_championnat.Organisateur</dd>
+
+            @if (_championnat.AnneeCreation is int annee)
+            {
+                <dt>Création</dt>
+                <dd>@annee</dd>
+            }
+
+            @if (!string.IsNullOrEmpty(_championnat.SiteWeb))
+            {
+                <dt>Site officiel</dt>
+                <dd><a href="@_championnat.SiteWeb" target="_blank" rel="noopener">@_championnat.SiteWeb</a></dd>
+            }
+        </dl>
+
+        <p class="detail-description">@_championnat.Description</p>
+    </article>
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Championship? _championnat;
+
+    protected override void OnParametersSet()
+    {
+        _championnat = Service.ParSlug(Slug);
+    }
+}

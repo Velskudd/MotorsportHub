@@ -1,0 +1,24 @@
+## .NET
+bin/
+obj/
+out/
+*.user
+*.suo
+
+## VS / Rider / VS Code
+.vs/
+.idea/
+*.swp
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+artifacts/
+
+## NuGet
+*.nupkg
+packages/
+
+## Divers
+*.log
+.DS_Store
