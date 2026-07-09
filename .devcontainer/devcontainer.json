@@ -1,6 +1,6 @@
 {
-  "name": "MotorsportHub (Blazor / .NET 8)",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0",
+  "name": "MotorsportHub (Blazor / .NET 10)",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
   "forwardPorts": [5080],
   "portsAttributes": {
     "5080": {

@@ -3,14 +3,14 @@
 Annuaire des championnats de sport automobile disputés en France : circuit, rallye,
 montagne, tout-terrain, karting, drift, camion et courses historiques.
 
-Le site est développé avec **Blazor** (.NET 8, rendu interactif côté serveur).
+Le site est développé avec **Blazor** (.NET 10, rendu interactif côté serveur).
 
 ## 🚀 Lancer le projet dans un Codespace
 
 1. Sur GitHub, cliquez sur **Code → Codespaces → Create codespace on main**
    (ou sur la branche de votre choix).
 2. Le conteneur de développement (défini dans `.devcontainer/devcontainer.json`)
-   s'ouvre avec le SDK .NET 8 préinstallé et exécute automatiquement `dotnet restore`.
+   s'ouvre avec le SDK .NET 10 préinstallé et exécute automatiquement `dotnet restore`.
 3. Dans le terminal du Codespace, lancez :
 
    ```bash
@@ -25,7 +25,7 @@ Le site est développé avec **Blazor** (.NET 8, rendu interactif côté serveur
 
 ## 💻 Lancer le projet en local
 
-Prérequis : [SDK .NET 8](https://dotnet.microsoft.com/download/dotnet/8.0)
+Prérequis : [SDK .NET 10](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 ```bash
 dotnet run --project src/MotorsportHub
@@ -38,7 +38,7 @@ Puis ouvrez <http://localhost:5080>.
 ```
 MotorsportHub.sln
 .devcontainer/
-  devcontainer.json          # Configuration Codespace (.NET 8, port 5080)
+  devcontainer.json          # Configuration Codespace (.NET 10, port 5080)
 src/MotorsportHub/
   Program.cs                 # Point d'entrée ASP.NET Core / Blazor
   Components/
