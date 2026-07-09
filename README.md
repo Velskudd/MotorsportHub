@@ -45,10 +45,10 @@ MotorsportHub.sln
   devcontainer.json                 # Configuration Codespace (.NET 10, port 5080)
 src/
   MotorsportHub.Domain/             # ── Cœur : entités, aucune dépendance
-    Entites/                        #    Championnat, Discipline, Organisateur, Statut
+    Entites/                        #    Plateau, Discipline, Organisateur, StatutPlateau
   MotorsportHub.Application/        # ── Cas d'usage et ports
-    Interfaces/                     #    IChampionnatRepository, IDisciplineRepository
-    Services/ChampionnatsService.cs #    Consommé par le front (et l'API plus tard)
+    Interfaces/                     #    IPlateauRepository, IDisciplineRepository
+    Services/PlateauxService.cs     #    Consommé par le front (et l'API plus tard)
   MotorsportHub.Infrastructure/     # ── Implémentations techniques
     Donnees/DonneesInitiales.cs     #    Jeu de données (futur seed EF Core)
     Depots/                         #    Repositories en mémoire (futur EF Core)
@@ -61,9 +61,10 @@ src/
 La règle de dépendance pointe vers l'intérieur : `Web → Infrastructure → Application → Domain`.
 Le front ne connaît que les entités du Domain et les services de l'Application.
 
-## 📝 Ajouter ou modifier un championnat
+## 📝 Ajouter ou modifier un plateau (championnat)
 
-Les données sont pour l'instant embarquées dans
+Chaque championnat est représenté par l'entité `Plateau`. Les données sont pour
+l'instant embarquées dans
 `src/MotorsportHub.Infrastructure/Donnees/DonneesInitiales.cs` : ajoutez une entrée
 via le helper `Ajouter(...)`. Lorsque la base de données arrivera (SQLite ou
 PostgreSQL + EF Core), cette classe deviendra le seed, et les repositories en

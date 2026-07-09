@@ -6,5 +6,5 @@ public class Organisateur
     public string Nom { get; set; } = string.Empty;
     public string? SiteWeb { get; set; }
 
-    public ICollection<Championnat> Championnats { get; set; } = new List<Championnat>();
+    public ICollection<Plateau> Plateaux { get; set; } = new List<Plateau>();
 }

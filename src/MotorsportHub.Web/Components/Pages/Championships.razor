@@ -1,5 +1,5 @@
 @page "/championnats"
-@inject ChampionnatsService Service
+@inject PlateauxService Service
 
 <PageTitle>Championnats — MotorsportHub</PageTitle>
 
@@ -33,13 +33,13 @@
 </p>
 
 <div class="card-grid">
-    @foreach (var championnat in _resultats)
+    @foreach (var plateau in _resultats)
     {
-        <a class="card" href="/championnats/@championnat.Slug">
-            <span class="badge">@championnat.Discipline.Emoji @championnat.Discipline.Nom</span>
-            <h2>@championnat.Nom</h2>
-            <p>@championnat.Description</p>
-            <span class="card-meta">@string.Join(", ", championnat.Organisateurs.Select(o => o.Nom))</span>
+        <a class="card" href="/championnats/@plateau.Slug">
+            <span class="badge">@plateau.Discipline.Emoji @plateau.Discipline.Nom</span>
+            <h2>@plateau.Nom</h2>
+            <p>@plateau.Description</p>
+            <span class="card-meta">@string.Join(", ", plateau.Organisateurs.Select(o => o.Nom))</span>
         </a>
     }
 </div>
@@ -51,7 +51,7 @@
 
 @code {
     private IReadOnlyList<Discipline> _disciplines = [];
-    private IReadOnlyList<Championnat> _resultats = [];
+    private IReadOnlyList<Plateau> _resultats = [];
     private string _texte = string.Empty;
     private string? _disciplineSlug;
 

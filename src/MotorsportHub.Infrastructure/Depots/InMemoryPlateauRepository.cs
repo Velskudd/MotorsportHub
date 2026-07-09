@@ -8,21 +8,21 @@ namespace MotorsportHub.Infrastructure.Depots;
 /// Implémentation en mémoire, à remplacer par un repository EF Core
 /// lorsque la base de données sera branchée.
 /// </summary>
-public class InMemoryChampionnatRepository : IChampionnatRepository
+public class InMemoryPlateauRepository : IPlateauRepository
 {
-    public Task<IReadOnlyList<Championnat>> ObtenirTousAsync(CancellationToken ct = default) =>
-        Task.FromResult(DonneesInitiales.Championnats);
+    public Task<IReadOnlyList<Plateau>> ObtenirTousAsync(CancellationToken ct = default) =>
+        Task.FromResult(DonneesInitiales.Plateaux);
 
-    public Task<Championnat?> ObtenirParSlugAsync(string slug, CancellationToken ct = default) =>
-        Task.FromResult(DonneesInitiales.Championnats.FirstOrDefault(
+    public Task<Plateau?> ObtenirParSlugAsync(string slug, CancellationToken ct = default) =>
+        Task.FromResult(DonneesInitiales.Plateaux.FirstOrDefault(
             c => string.Equals(c.Slug, slug, StringComparison.OrdinalIgnoreCase)));
 
-    public Task<IReadOnlyList<Championnat>> RechercherAsync(
+    public Task<IReadOnlyList<Plateau>> RechercherAsync(
         string? texte,
         string? disciplineSlug,
         CancellationToken ct = default)
     {
-        IEnumerable<Championnat> resultat = DonneesInitiales.Championnats;
+        IEnumerable<Plateau> resultat = DonneesInitiales.Plateaux;
 
         if (!string.IsNullOrWhiteSpace(disciplineSlug))
         {
@@ -37,7 +37,7 @@ public class InMemoryChampionnatRepository : IChampionnatRepository
                 c.Organisateurs.Any(o => o.Nom.Contains(texte, StringComparison.OrdinalIgnoreCase)));
         }
 
-        IReadOnlyList<Championnat> liste = resultat
+        IReadOnlyList<Plateau> liste = resultat
             .OrderBy(c => c.Discipline.Ordre)
             .ThenBy(c => c.Nom)
             .ToList();

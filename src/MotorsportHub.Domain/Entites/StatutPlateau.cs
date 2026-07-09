@@ -1,6 +1,6 @@
 namespace MotorsportHub.Domain.Entites;
 
-public enum StatutChampionnat
+public enum StatutPlateau
 {
     Actif,
     Disparu

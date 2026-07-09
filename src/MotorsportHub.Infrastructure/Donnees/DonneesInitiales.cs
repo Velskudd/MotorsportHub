@@ -10,7 +10,7 @@ public static class DonneesInitiales
 {
     public static IReadOnlyList<Discipline> Disciplines { get; }
     public static IReadOnlyList<Organisateur> Organisateurs { get; }
-    public static IReadOnlyList<Championnat> Championnats { get; }
+    public static IReadOnlyList<Plateau> Plateaux { get; }
 
     static DonneesInitiales()
     {
@@ -45,7 +45,7 @@ public static class DonneesInitiales
             renaultSport, ultimateCup, iameFrance, fdc, hvmRacing
         };
 
-        var championnats = new List<Championnat>();
+        var plateaux = new List<Plateau>();
         var idSuivant = 1;
 
         void Ajouter(
@@ -57,7 +57,7 @@ public static class DonneesInitiales
             string? siteWeb,
             params Organisateur[] organisateurs)
         {
-            var championnat = new Championnat
+            var plateau = new Plateau
             {
                 Id = idSuivant++,
                 Slug = slug,
@@ -65,19 +65,19 @@ public static class DonneesInitiales
                 Description = description,
                 AnneeCreation = anneeCreation,
                 SiteWeb = siteWeb,
-                Statut = StatutChampionnat.Actif,
+                Statut = StatutPlateau.Actif,
                 DisciplineId = discipline.Id,
                 Discipline = discipline
             };
 
             foreach (var organisateur in organisateurs)
             {
-                championnat.Organisateurs.Add(organisateur);
-                organisateur.Championnats.Add(championnat);
+                plateau.Organisateurs.Add(organisateur);
+                organisateur.Plateaux.Add(plateau);
             }
 
-            discipline.Championnats.Add(championnat);
-            championnats.Add(championnat);
+            discipline.Plateaux.Add(plateau);
+            plateaux.Add(plateau);
         }
 
         // ── Circuit ─────────────────────────────────────────────────────────
@@ -290,6 +290,6 @@ public static class DonneesInitiales
             "https://www.ffsa.org",
             ffsa, hvmRacing);
 
-        Championnats = championnats;
+        Plateaux = plateaux;
     }
 }

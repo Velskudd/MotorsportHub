@@ -11,9 +11,9 @@ builder.Services.AddRazorComponents()
 // Composition root : on branche ici les implémentations d'infrastructure
 // sur les ports définis dans la couche Application. Le passage à EF Core
 // se fera en remplaçant les repositories en mémoire.
-builder.Services.AddSingleton<IChampionnatRepository, InMemoryChampionnatRepository>();
+builder.Services.AddSingleton<IPlateauRepository, InMemoryPlateauRepository>();
 builder.Services.AddSingleton<IDisciplineRepository, InMemoryDisciplineRepository>();
-builder.Services.AddScoped<ChampionnatsService>();
+builder.Services.AddScoped<PlateauxService>();
 
 var app = builder.Build();
 

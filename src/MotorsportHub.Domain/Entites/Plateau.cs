@@ -1,6 +1,6 @@
 namespace MotorsportHub.Domain.Entites;
 
-public class Championnat
+public class Plateau
 {
     public int Id { get; set; }
     public string Slug { get; set; } = string.Empty;
@@ -8,7 +8,7 @@ public class Championnat
     public string Description { get; set; } = string.Empty;
     public int? AnneeCreation { get; set; }
     public string? SiteWeb { get; set; }
-    public StatutChampionnat Statut { get; set; } = StatutChampionnat.Actif;
+    public StatutPlateau Statut { get; set; } = StatutPlateau.Actif;
 
     public int DisciplineId { get; set; }
     public Discipline Discipline { get; set; } = null!;

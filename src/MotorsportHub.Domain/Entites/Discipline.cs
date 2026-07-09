@@ -10,5 +10,5 @@ public class Discipline
     /// <summary>Ordre d'affichage dans les listes et filtres.</summary>
     public int Ordre { get; set; }
 
-    public ICollection<Championnat> Championnats { get; set; } = new List<Championnat>();
+    public ICollection<Plateau> Plateaux { get; set; } = new List<Plateau>();
 }

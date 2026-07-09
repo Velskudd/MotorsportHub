@@ -1,7 +1,7 @@
 @page "/championnats/{Slug}"
-@inject ChampionnatsService Service
+@inject PlateauxService Service
 
-@if (_championnat is null)
+@if (_plateau is null)
 {
     <PageTitle>Championnat introuvable — MotorsportHub</PageTitle>
     <h1>Championnat introuvable</h1>
@@ -10,38 +10,38 @@
 }
 else
 {
-    <PageTitle>@_championnat.Nom — MotorsportHub</PageTitle>
+    <PageTitle>@_plateau.Nom — MotorsportHub</PageTitle>
 
     <a class="back-link" href="/championnats">← Tous les championnats</a>
 
     <article class="detail">
-        <span class="badge">@_championnat.Discipline.Emoji @_championnat.Discipline.Nom</span>
-        <h1>@_championnat.Nom</h1>
+        <span class="badge">@_plateau.Discipline.Emoji @_plateau.Discipline.Nom</span>
+        <h1>@_plateau.Nom</h1>
 
         <dl class="detail-facts">
-            <dt>Organisateur@(_championnat.Organisateurs.Count > 1 ? "s" : "")</dt>
-            <dd>@string.Join(", ", _championnat.Organisateurs.Select(o => o.Nom))</dd>
+            <dt>Organisateur@(_plateau.Organisateurs.Count > 1 ? "s" : "")</dt>
+            <dd>@string.Join(", ", _plateau.Organisateurs.Select(o => o.Nom))</dd>
 
-            @if (_championnat.AnneeCreation is int annee)
+            @if (_plateau.AnneeCreation is int annee)
             {
                 <dt>Création</dt>
                 <dd>@annee</dd>
             }
 
-            @if (_championnat.Statut == StatutChampionnat.Disparu)
+            @if (_plateau.Statut == StatutPlateau.Disparu)
             {
                 <dt>Statut</dt>
                 <dd>Disparu</dd>
             }
 
-            @if (!string.IsNullOrEmpty(_championnat.SiteWeb))
+            @if (!string.IsNullOrEmpty(_plateau.SiteWeb))
             {
                 <dt>Site officiel</dt>
-                <dd><a href="@_championnat.SiteWeb" target="_blank" rel="noopener">@_championnat.SiteWeb</a></dd>
+                <dd><a href="@_plateau.SiteWeb" target="_blank" rel="noopener">@_plateau.SiteWeb</a></dd>
             }
         </dl>
 
-        <p class="detail-description">@_championnat.Description</p>
+        <p class="detail-description">@_plateau.Description</p>
     </article>
 }
 
@@ -49,10 +49,10 @@ else
     [Parameter]
     public string Slug { get; set; } = string.Empty;
 
-    private Championnat? _championnat;
+    private Plateau? _plateau;
 
     protected override async Task OnParametersSetAsync()
     {
-        _championnat = await Service.ObtenirParSlugAsync(Slug);
+        _plateau = await Service.ObtenirParSlugAsync(Slug);
     }
 }
