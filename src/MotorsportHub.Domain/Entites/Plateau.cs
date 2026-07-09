@@ -11,7 +11,7 @@ public class Plateau
     public StatutPlateau Statut { get; set; } = StatutPlateau.Actif;
 
     public int DisciplineId { get; set; }
-    public Discipline Discipline { get; set; } = null!;
+    public Discipline Discipline { get; set; } = new Discipline();
 
-    public ICollection<Organisateur> Organisateurs { get; set; } = new List<Organisateur>();
+    public Organisateur Organisateur { get; set; } = new Organisateur();
 }
