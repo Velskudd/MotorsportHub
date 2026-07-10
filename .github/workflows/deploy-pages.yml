@@ -2,10 +2,8 @@ name: Déployer sur GitHub Pages
 
 on:
   push:
-    # Retirer la branche de travail de cette liste après sa fusion dans main.
     branches:
       - main
-      - claude/motorsport-championships-blazor-q5s167
   workflow_dispatch:
 
 permissions:
