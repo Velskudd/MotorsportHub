@@ -63,7 +63,7 @@
                                 @plateau.Discipline.Emoji @plateau.Discipline.Nom
                             </span>
                         </td>
-                        <td class="col-orga">@string.Join(", ", plateau.Organisateur.Nom))</td>
+                        <td class="col-orga">@plateau.Organisateur.Nom</td>
                         <td class="col-depuis">@(plateau.AnneeCreation?.ToString() ?? "—")</td>
                     </tr>
                 }
