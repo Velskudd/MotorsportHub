@@ -33,8 +33,7 @@ public class InMemoryPlateauRepository : IPlateauRepository
         {
             resultat = resultat.Where(c =>
                 c.Nom.Contains(texte, StringComparison.OrdinalIgnoreCase) ||
-                c.Description.Contains(texte, StringComparison.OrdinalIgnoreCase) ||
-                c.Organisateurs.Any(o => o.Nom.Contains(texte, StringComparison.OrdinalIgnoreCase)));
+                c.Description.Contains(texte, StringComparison.OrdinalIgnoreCase));
         }
 
         IReadOnlyList<Plateau> liste = resultat
