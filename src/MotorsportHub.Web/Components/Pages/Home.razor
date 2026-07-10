@@ -50,7 +50,7 @@
 
         var tous = await Service.ObtenirTousAsync();
         _totalOrganisateurs = tous
-            .SelectMany(p => p.Organisateurs)
+            .Select(p => p.Organisateur)
             .Distinct()
             .Count();
     }

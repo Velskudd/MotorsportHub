@@ -25,7 +25,7 @@ else
             }
             <h1>@_plateau.Nom</h1>
             <p class="detail-meta">
-                Organisé par <strong>@string.Join(", ", _plateau.Organisateurs.Select(o => o.Nom))</strong>
+                Organisé par <strong>@string.Join(", ", _plateau.Organisateur.Nom)</strong>
                 @if (_plateau.AnneeCreation is int annee)
                 {
                     <span class="sep">•</span>
