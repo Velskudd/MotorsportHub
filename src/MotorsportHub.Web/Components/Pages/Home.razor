@@ -18,8 +18,8 @@
         <strong>@_totalOrganisateurs</strong> organisateurs
     </p>
     <div class="hero-actions">
-        <a class="cta" href="/championnats">Explorer les championnats</a>
-        <a class="cta cta--ghost" href="/a-propos">À propos du projet</a>
+        <a class="cta" href="championnats">Explorer les championnats</a>
+        <a class="cta cta--ghost" href="a-propos">À propos du projet</a>
     </div>
 </section>
 
@@ -29,7 +29,7 @@
         @foreach (var element in _parDiscipline)
         {
             <a class="d-tile tile--@element.Discipline.Slug"
-               href="/championnats?discipline=@element.Discipline.Slug">
+               href="championnats?discipline=@element.Discipline.Slug">
                 <span class="d-emoji">@element.Discipline.Emoji</span>
                 <span class="d-name">@element.Discipline.Nom</span>
                 <span class="d-count">@element.Nombre championnat@(element.Nombre > 1 ? "s" : "")</span>

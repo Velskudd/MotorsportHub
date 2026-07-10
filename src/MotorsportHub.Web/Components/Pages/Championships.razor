@@ -53,7 +53,7 @@
                 {
                     <tr class="row-link" @onclick="() => Ouvrir(plateau.Slug)">
                         <td class="col-nom">
-                            <a class="row-title" href="/championnats/@plateau.Slug" @onclick:stopPropagation>
+                            <a class="row-title" href="championnats/@plateau.Slug" @onclick:stopPropagation>
                                 @plateau.Nom
                             </a>
                             <span class="row-desc">@plateau.Description</span>
@@ -110,5 +110,5 @@ else
     }
 
     private void Ouvrir(string slug) =>
-        NavManager.NavigateTo($"/championnats/{slug}");
+        NavManager.NavigateTo($"championnats/{slug}");
 }
