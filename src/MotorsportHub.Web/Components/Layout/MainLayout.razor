@@ -2,12 +2,17 @@
 
 <div class="page">
     <header class="topbar">
-        <a class="brand" href="/">🏁 <span>Motorsport<strong>Hub</strong></span></a>
-        <nav>
-            <NavLink href="/" Match="NavLinkMatch.All">Accueil</NavLink>
-            <NavLink href="/championnats">Championnats</NavLink>
-            <NavLink href="/a-propos">À propos</NavLink>
-        </nav>
+        <div class="topbar-inner">
+            <a class="brand" href="/">
+                <span class="brand-flag">🏁</span>
+                <span class="brand-text">Motorsport<em>Hub</em></span>
+            </a>
+            <nav>
+                <NavLink href="/" Match="NavLinkMatch.All">Accueil</NavLink>
+                <NavLink href="/championnats">Championnats</NavLink>
+                <NavLink href="/a-propos">À propos</NavLink>
+            </nav>
+        </div>
     </header>
 
     <main>
@@ -15,6 +20,9 @@
     </main>
 
     <footer class="footer">
-        <p>MotorsportHub — l'annuaire des championnats de sport automobile en France.</p>
+        <div class="footer-inner">
+            <span class="footer-brand">🏁 Motorsport<em>Hub</em></span>
+            <span>L'annuaire des championnats de sport automobile en France.</span>
+        </div>
     </footer>
 </div>

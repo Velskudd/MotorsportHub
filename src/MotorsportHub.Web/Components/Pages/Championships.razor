@@ -1,11 +1,15 @@
 @page "/championnats"
 @inject PlateauxService Service
+@inject NavigationManager NavManager
 
 <PageTitle>Championnats — MotorsportHub</PageTitle>
 
-<h1>Les championnats</h1>
+<div class="page-head">
+    <h1>Championnats</h1>
+    <p class="page-sub">Tous les championnats et grandes séries disputés en France.</p>
+</div>
 
-<div class="filters">
+<div class="toolbar">
     <input class="search"
            type="search"
            placeholder="Rechercher un championnat, un organisateur..."
@@ -29,27 +33,53 @@
 </div>
 
 <p class="result-count">
-    @_resultats.Count championnat@(_resultats.Count > 1 ? "s" : "") trouvé@(_resultats.Count > 1 ? "s" : "")
+    @_resultats.Count championnat@(_resultats.Count > 1 ? "s" : "")
 </p>
 
-<div class="card-grid">
-    @foreach (var plateau in _resultats)
-    {
-        <a class="card" href="/championnats/@plateau.Slug">
-            <span class="badge">@plateau.Discipline.Emoji @plateau.Discipline.Nom</span>
-            <h2>@plateau.Nom</h2>
-            <p>@plateau.Description</p>
-            <span class="card-meta">@string.Join(", ", plateau.Organisateurs.Select(o => o.Nom))</span>
-        </a>
-    }
-</div>
-
-@if (_resultats.Count == 0)
+@if (_resultats.Count > 0)
+{
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="col-nom">Championnat</th>
+                    <th>Discipline</th>
+                    <th class="col-orga">Organisation</th>
+                    <th class="col-depuis">Depuis</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var plateau in _resultats)
+                {
+                    <tr class="row-link" @onclick="() => Ouvrir(plateau.Slug)">
+                        <td class="col-nom">
+                            <a class="row-title" href="/championnats/@plateau.Slug" @onclick:stopPropagation>
+                                @plateau.Nom
+                            </a>
+                            <span class="row-desc">@plateau.Description</span>
+                        </td>
+                        <td>
+                            <span class="tag tag--@plateau.Discipline.Slug">
+                                @plateau.Discipline.Emoji @plateau.Discipline.Nom
+                            </span>
+                        </td>
+                        <td class="col-orga">@string.Join(", ", plateau.Organisateurs.Select(o => o.Nom))</td>
+                        <td class="col-depuis">@(plateau.AnneeCreation?.ToString() ?? "—")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
 {
     <p class="empty">Aucun championnat ne correspond à votre recherche.</p>
 }
 
 @code {
+    [SupplyParameterFromQuery(Name = "discipline")]
+    public string? DisciplineInitiale { get; set; }
+
     private IReadOnlyList<Discipline> _disciplines = [];
     private IReadOnlyList<Plateau> _resultats = [];
     private string _texte = string.Empty;
@@ -58,6 +88,7 @@
     protected override async Task OnInitializedAsync()
     {
         _disciplines = await Service.ObtenirDisciplinesAsync();
+        _disciplineSlug = DisciplineInitiale;
         await RafraichirAsync();
     }
 
@@ -77,4 +108,7 @@
     {
         _resultats = await Service.RechercherAsync(_texte, _disciplineSlug);
     }
+
+    private void Ouvrir(string slug) =>
+        NavManager.NavigateTo($"/championnats/{slug}");
 }

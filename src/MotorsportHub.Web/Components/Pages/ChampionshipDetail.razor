@@ -14,32 +14,30 @@ else
 
     <a class="back-link" href="/championnats">← Tous les championnats</a>
 
-    <article class="detail">
-        <span class="badge">@_plateau.Discipline.Emoji @_plateau.Discipline.Nom</span>
-        <h1>@_plateau.Nom</h1>
-
-        <dl class="detail-facts">
-            <dt>Organisateur@(_plateau.Organisateurs.Count > 1 ? "s" : "")</dt>
-            <dd>@string.Join(", ", _plateau.Organisateurs.Select(o => o.Nom))</dd>
-
-            @if (_plateau.AnneeCreation is int annee)
-            {
-                <dt>Création</dt>
-                <dd>@annee</dd>
-            }
-
+    <article class="detail tile--@_plateau.Discipline.Slug">
+        <header class="detail-head">
+            <span class="tag tag--@_plateau.Discipline.Slug">
+                @_plateau.Discipline.Emoji @_plateau.Discipline.Nom
+            </span>
             @if (_plateau.Statut == StatutPlateau.Disparu)
             {
-                <dt>Statut</dt>
-                <dd>Disparu</dd>
+                <span class="tag tag--disparu">Disparu</span>
             }
-
-            @if (!string.IsNullOrEmpty(_plateau.SiteWeb))
-            {
-                <dt>Site officiel</dt>
-                <dd><a href="@_plateau.SiteWeb" target="_blank" rel="noopener">@_plateau.SiteWeb</a></dd>
-            }
-        </dl>
+            <h1>@_plateau.Nom</h1>
+            <p class="detail-meta">
+                Organisé par <strong>@string.Join(", ", _plateau.Organisateurs.Select(o => o.Nom))</strong>
+                @if (_plateau.AnneeCreation is int annee)
+                {
+                    <span class="sep">•</span>
+                    <span>Depuis <strong>@annee</strong></span>
+                }
+                @if (!string.IsNullOrEmpty(_plateau.SiteWeb))
+                {
+                    <span class="sep">•</span>
+                    <a href="@_plateau.SiteWeb" target="_blank" rel="noopener">Site officiel ↗</a>
+                }
+            </p>
+        </header>
 
         <p class="detail-description">@_plateau.Description</p>
     </article>
