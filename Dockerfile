@@ -15,10 +15,18 @@ RUN dotnet publish src/MotorsportHub.Web/MotorsportHub.Web.csproj -c Release -o 
 
 # ── Étape d'exécution : runtime ASP.NET Core seul ───────────────────────
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+
+# Hugging Face Spaces exécute le conteneur en non-root (uid 1000) :
+# un utilisateur dédié avec un HOME inscriptible évite les erreurs
+# de permissions (clés DataProtection d'ASP.NET, notamment).
+RUN useradd -m -u 1000 appuser
+USER appuser
+ENV HOME=/home/appuser
+
 WORKDIR /app
-COPY --from=build /app/publish .
+COPY --from=build --chown=appuser /app/publish .
 
 # L'image aspnet écoute par défaut sur 0.0.0.0:8080 (ASPNETCORE_HTTP_PORTS) ;
-# render.yaml déclare PORT=8080 pour que Render route le trafic vers ce port.
+# render.yaml (PORT=8080) et README.md (app_port: 8080) routent vers ce port.
 EXPOSE 8080
 ENTRYPOINT ["dotnet", "MotorsportHub.Web.dll"]

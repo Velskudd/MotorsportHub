@@ -1,3 +1,13 @@
+---
+title: MotorsportHub
+emoji: 🏁
+colorFrom: red
+colorTo: gray
+sdk: docker
+app_port: 8080
+pinned: false
+---
+
 # 🏁 MotorsportHub
 
 Annuaire des championnats de sport automobile disputés en France : circuit, rallye,
@@ -69,6 +79,36 @@ l'instant embarquées dans
 via le helper `Ajouter(...)`. Lorsque la base de données arrivera (SQLite ou
 PostgreSQL + EF Core), cette classe deviendra le seed, et les repositories en
 mémoire seront remplacés par des repositories EF Core — sans toucher au front.
+
+## 🚢 Déploiement gratuit
+
+Le dépôt contient un `Dockerfile` multi-étapes prêt pour deux hébergeurs gratuits.
+
+### Hugging Face Spaces (sans carte bancaire)
+
+Le bloc YAML en tête de ce README est la configuration du Space
+(`sdk: docker`, `app_port: 8080`).
+
+1. Créez un compte sur [huggingface.co](https://huggingface.co), puis
+   **New Space** → SDK **Docker** → template **Blank** → matériel **CPU basic (free)**.
+2. Créez un jeton d'accès en écriture : **Settings → Access Tokens → New token (Write)**.
+3. Poussez le dépôt vers le Space (le jeton sert de mot de passe) :
+
+   ```bash
+   git remote add space https://huggingface.co/spaces/<votre-pseudo>/motorsporthub
+   git push space <votre-branche>:main
+   ```
+
+4. Le Space se construit (~3-5 min) puis le site est servi sur
+   `https://<votre-pseudo>-motorsporthub.hf.space`. Le Space s'endort après
+   48 h sans visite et se réveille à la première requête.
+
+### Render (carte demandée à l'inscription pour vérification)
+
+`render.yaml` décrit le service : **New → Blueprint** sur le repo (lit la branche
+par défaut), ou **New → Web Service** en choisissant la branche manuellement
+(ajouter alors la variable d'environnement `PORT=8080`). Mise en veille après
+15 min d'inactivité sur le plan gratuit.
 
 ## 🧭 Évolutions prévues
 
