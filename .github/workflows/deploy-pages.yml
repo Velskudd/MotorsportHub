@@ -1,0 +1,58 @@
+name: Déployer sur GitHub Pages
+
+on:
+  push:
+    # Retirer la branche de travail de cette liste après sa fusion dans main.
+    branches:
+      - main
+      - claude/motorsport-championships-blazor-q5s167
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Publier le site Blazor WebAssembly
+        run: dotnet publish src/MotorsportHub.Web/MotorsportHub.Web.csproj -c Release -o out
+
+      - name: Adapter le base href au sous-chemin GitHub Pages
+        run: sed -i 's|<base href="/" />|<base href="/MotorsportHub/" />|' out/wwwroot/index.html
+
+      - name: Fallback SPA pour le routage côté client
+        run: cp out/wwwroot/index.html out/wwwroot/404.html
+
+      - name: Désactiver Jekyll
+        run: touch out/wwwroot/.nojekyll
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out/wwwroot
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
