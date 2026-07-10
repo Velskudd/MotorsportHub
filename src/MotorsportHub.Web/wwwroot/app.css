@@ -52,6 +52,12 @@ h1, h2, h3 {
     line-height: 1.15;
 }
 
+/* FocusOnNavigate pose le focus sur le h1 à chaque navigation :
+   on masque le contour, comme dans le template Blazor officiel. */
+h1:focus {
+    outline: none;
+}
+
 .page {
     min-height: 100vh;
     display: flex;
