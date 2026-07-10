@@ -86,8 +86,30 @@ copie `index.html` en `404.html` (fallback SPA pour les liens profonds comme
 
 Le site est ensuite disponible sur `https://<compte>.github.io/MotorsportHub/`.
 
+## 🗄️ Base de données (Supabase)
+
+Le catalogue peut être servi depuis un Postgres gratuit hébergé par
+[Supabase](https://supabase.com), interrogé par le front via l'API REST
+générée (PostgREST). Sans configuration, le site utilise les données embarquées.
+
+**Mise en place :**
+
+1. Créez un projet sur supabase.com (gratuit, sans carte bancaire).
+2. Dans **SQL Editor**, exécutez le contenu de [`db/supabase-schema.sql`](db/supabase-schema.sql)
+   (tables, lecture publique via RLS, données initiales).
+3. Renseignez `src/MotorsportHub.Web/wwwroot/appsettings.json` avec l'URL du
+   projet et la clé **anon** (Dashboard → Settings → API). Cette clé est
+   publique par conception : la base n'autorise que la lecture.
+4. Poussez : le site déployé lit désormais la base. En cas d'indisponibilité
+   (projet en pause), il se replie automatiquement sur les données embarquées.
+
+**Anti-pause** : le plan gratuit met en pause un projet inactif ~7 jours.
+Le workflow `keepalive-supabase.yml` fait une requête quotidienne ; définissez
+les variables de repo `SUPABASE_URL` et `SUPABASE_ANON_KEY`
+(Settings → Secrets and variables → Actions → Variables) pour l'activer.
+
 ## 🧭 Évolutions prévues
 
 - Entités `Circuit`, `Pilote`, `Voiture`, `Saison`, `Épreuve` dans le Domain
-- Projet `MotorsportHub.Api` (minimal API) consommant la couche Application
-- Base de données via EF Core dans Infrastructure
+- Projet `MotorsportHub.Api` (minimal API) consommant la couche Application,
+  branché sur le Postgres Supabase via EF Core
