@@ -72,7 +72,7 @@ public static class DonneesInitiales
 
             foreach (var organisateur in organisateurs)
             {
-                plateau.Organisateurs.Add(organisateur);
+                plateau.Organisateur = organisateur;
                 organisateur.Plateaux.Add(plateau);
             }
 

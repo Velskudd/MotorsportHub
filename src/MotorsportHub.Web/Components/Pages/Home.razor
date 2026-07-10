@@ -4,23 +4,35 @@
 <PageTitle>MotorsportHub — Les championnats de sport auto en France</PageTitle>
 
 <section class="hero">
-    <h1>Tous les championnats de sport automobile en France</h1>
-    <p>
-        Du GT au rallye, de la course de côte au karting : MotorsportHub répertorie
-        <strong>@_total championnats et séries</strong> disputés dans l'Hexagone.
+    <p class="hero-kicker">L'annuaire du sport automobile français</p>
+    <h1>Tous les championnats<br />de France de sport auto</h1>
+    <p class="hero-sub">
+        Du GT au rallye, de la course de côte au karting : la base de référence
+        des plateaux disputés dans l'Hexagone.
     </p>
-    <a class="cta" href="/championnats">Explorer les championnats</a>
+    <p class="hero-stats">
+        <strong>@_totalPlateaux</strong> championnats
+        <span class="sep">•</span>
+        <strong>@_parDiscipline.Count</strong> disciplines
+        <span class="sep">•</span>
+        <strong>@_totalOrganisateurs</strong> organisateurs
+    </p>
+    <div class="hero-actions">
+        <a class="cta" href="/championnats">Explorer les championnats</a>
+        <a class="cta cta--ghost" href="/a-propos">À propos du projet</a>
+    </div>
 </section>
 
-<section class="category-overview">
+<section class="disciplines">
     <h2>Par discipline</h2>
-    <div class="category-grid">
+    <div class="d-grid">
         @foreach (var element in _parDiscipline)
         {
-            <a class="category-tile" href="/championnats">
-                <span class="category-emoji">@element.Discipline.Emoji</span>
-                <span class="category-name">@element.Discipline.Nom</span>
-                <span class="category-count">@element.Nombre championnat@(element.Nombre > 1 ? "s" : "")</span>
+            <a class="d-tile tile--@element.Discipline.Slug"
+               href="/championnats?discipline=@element.Discipline.Slug">
+                <span class="d-emoji">@element.Discipline.Emoji</span>
+                <span class="d-name">@element.Discipline.Nom</span>
+                <span class="d-count">@element.Nombre championnat@(element.Nombre > 1 ? "s" : "")</span>
             </a>
         }
     </div>
@@ -28,11 +40,18 @@
 
 @code {
     private IReadOnlyList<DisciplineAvecNombre> _parDiscipline = [];
-    private int _total;
+    private int _totalPlateaux;
+    private int _totalOrganisateurs;
 
     protected override async Task OnInitializedAsync()
     {
         _parDiscipline = await Service.CompterParDisciplineAsync();
-        _total = _parDiscipline.Sum(e => e.Nombre);
+        _totalPlateaux = _parDiscipline.Sum(e => e.Nombre);
+
+        var tous = await Service.ObtenirTousAsync();
+        _totalOrganisateurs = tous
+            .Select(p => p.Organisateur)
+            .Distinct()
+            .Count();
     }
 }

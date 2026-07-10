@@ -3,11 +3,12 @@
 Annuaire des championnats de sport automobile disputés en France : circuit, rallye,
 montagne, tout-terrain, karting, drift, camion et courses historiques.
 
-Le site est développé avec **Blazor** (.NET 10, rendu interactif côté serveur), selon une
-**architecture en oignon** : le domaine au centre, sans dépendance ; les cas d'usage et les
-ports (interfaces) dans la couche Application ; les implémentations techniques dans
-Infrastructure ; et le front Blazor en périphérie. Un projet API pourra s'ajouter plus tard
-à côté du front, en consommant la même couche Application.
+Le site est développé avec **Blazor WebAssembly** (.NET 10, exécuté dans le navigateur),
+selon une **architecture en oignon** : le domaine au centre, sans dépendance ; les cas
+d'usage et les ports (interfaces) dans la couche Application ; les implémentations
+techniques dans Infrastructure ; et le front Blazor en périphérie. Un projet API pourra
+s'ajouter plus tard : les repositories en mémoire seront alors remplacés par des clients
+HTTP, sans toucher aux pages.
 
 ## 🚀 Lancer le projet dans un Codespace
 
@@ -69,6 +70,21 @@ l'instant embarquées dans
 via le helper `Ajouter(...)`. Lorsque la base de données arrivera (SQLite ou
 PostgreSQL + EF Core), cette classe deviendra le seed, et les repositories en
 mémoire seront remplacés par des repositories EF Core — sans toucher au front.
+
+## 🚢 Déploiement sur GitHub Pages
+
+Le site étant du Blazor WebAssembly (100 % statique), il est hébergé gratuitement
+sur GitHub Pages, sans serveur, sans quota et sans mise en veille.
+
+Le workflow `.github/workflows/deploy-pages.yml` publie le site à chaque push :
+il compile en Release, adapte le `<base href>` au sous-chemin `/MotorsportHub/`,
+copie `index.html` en `404.html` (fallback SPA pour les liens profonds comme
+`/championnats/...`) et déploie sur Pages.
+
+**Activation (une seule fois)** : dans les réglages du repo GitHub,
+**Settings → Pages → Build and deployment → Source : GitHub Actions**.
+
+Le site est ensuite disponible sur `https://<compte>.github.io/MotorsportHub/`.
 
 ## 🧭 Évolutions prévues
 
